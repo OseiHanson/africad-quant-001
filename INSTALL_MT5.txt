@@ -1,0 +1,42 @@
+AFRICAD QUANT 001 — MetaTrader 5 folder layout (fixes missing .mqh errors)
+================================================================================
+
+Your errors like:
+  file '...\MQL5\Experts\Config\Settings.mqh' not found
+happen when ONLY the .mq5 file is inside MQL5\Experts\, with no Config\Core\Utils\UI next to it.
+
+CORRECT INSTALL
+---------------
+1) Copy the ENTIRE directory:
+      AFRICAD_QUANT_001
+   (contains MainEA.mq5 or main995Gold.mq5, plus Config, Core, Utils, UI, Data, website)
+
+2) Paste it here (example path):
+      C:\Users\hp\AppData\Roaming\MetaQuotes\Terminal\<YOUR_TERMINAL_ID>\MQL5\Experts\
+
+3) You must end up with:
+      ...\MQL5\Experts\AFRICAD_QUANT_001\MainEA.mq5
+      ...\MQL5\Experts\AFRICAD_QUANT_001\Config\Settings.mqh
+      ...\MQL5\Experts\AFRICAD_QUANT_001\Core\MarketStructure.mqh
+      ... (all other .mqh files)
+
+4) In MetaEditor, OPEN the EA from inside that subfolder:
+      File -> Open -> ...\Experts\AFRICAD_QUANT_001\main995Gold.mq5
+   (or MainEA.mq5)
+
+5) Compile (F7). The includes are relative to the folder that contains the .mq5 file.
+
+WRONG (do not do this)
+----------------------
+  ...\MQL5\Experts\main995Gold.mq5          <- alone, no Config\Core folders here
+  ...\MQL5\Experts\Config\                  <- compiler will NOT use this unless
+                                               the .mq5 is in Experts\ root AND you
+                                               duplicate the whole tree under Experts\
+                                               (messy — use the subfolder instead)
+
+OPTIONAL: second copy under Include
+-----------------------------------
+If you prefer the .mq5 in Experts\ root, you must copy ALL .mqh trees to:
+  MQL5\Include\AFRICAD_QUANT_001\
+and change includes to angle-bracket form — not set up by default in this package.
+The subfolder under Experts is the supported layout.

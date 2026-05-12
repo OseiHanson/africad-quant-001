@@ -1,0 +1,13 @@
+# MetaTrader / MQL5 build outputs (keep source; ignore if you compile here)
+*.ex5
+*.log
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+
+# Optional local secrets
+.env
+.env.*

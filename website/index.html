@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AFRICAD QUANT 001 — MetaTrader 5 institutional SMC framework for XAUUSD / XAUUSDm." />
+  <title>AFRICAD QUANT 001 | Gold SMC Trading System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="#">AFRICAD <span>QUANT 001</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+        <span class="sr-only">Menu</span>
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="site-nav" data-nav>
+        <a href="#overview">Overview</a>
+        <a href="#gold">Gold (XAU)</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#install">Install</a>
+        <a href="#risk">Risk</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">MetaTrader 5 · MQL5 · Modular SMC</p>
+          <h1>Institutional-style execution for <em>Gold vs USD</em></h1>
+          <p class="lede">
+            AFRICAD QUANT 001 is a capital-first Expert Advisor framework: liquidity sweeps, structure (BOS/CHOCH),
+            fair value gaps, order blocks, session filters, and a scored “confidence” gate — packaged in one folder for MT5.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#install">Deploy on MT5</a>
+            <a class="btn ghost" href="#gold">XAUUSD / XAUUSDm</a>
+          </div>
+          <ul class="hero-bullets">
+            <li>No martingale · No grid</li>
+            <li>Risk engine &amp; prop-style limits</li>
+            <li>Optional SMT, sessions (UTC), dashboard</li>
+          </ul>
+        </div>
+        <div class="hero-panel" aria-hidden="true">
+          <div class="panel-card">
+            <h2>Pipeline</h2>
+            <ol class="pipeline">
+              <li>HTF bias</li>
+              <li>Liquidity</li>
+              <li>BOS / displacement</li>
+              <li>FVG + OB</li>
+              <li>M5 confirm</li>
+              <li>Risk → Execute</li>
+            </ol>
+            <div class="panel-stat">
+              <span class="label">Default symbol focus</span>
+              <span class="value">XAUUSD · XAUUSDm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="wrap">
+        <h2 class="section-title">What you get</h2>
+        <p class="section-lead">
+          Everything ships inside a single project folder: <code class="inline">AFRICAD_QUANT_001/</code> with
+          <code class="inline">MainEA.mq5</code>, modular <code class="inline">Core/</code>, <code class="inline">Utils/</code>,
+          <code class="inline">UI/</code>, <code class="inline">Config/</code>, and this website under <code class="inline">website/</code>.
+        </p>
+        <div class="cards">
+          <article class="card">
+            <h3>Smart money stack</h3>
+            <p>Liquidity sweeps, BOS with ATR displacement, CHOCH awareness, FVG validation, and order-block mitigation tracking.</p>
+          </article>
+          <article class="card">
+            <h3>Risk first</h3>
+            <p>Per-trade risk or fixed lots, daily &amp; equity drawdown guards, consecutive-loss halt, spread protection, optional profit target.</p>
+          </article>
+          <article class="card">
+            <h3>Trade management</h3>
+            <p>Break-even, partials, ATR trailing, and structure-based exit hooks — designed for selective, non-overtraded behaviour.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="gold">
+      <div class="wrap split">
+        <div>
+          <h2 class="section-title">Gold vs USD</h2>
+          <p class="section-lead">
+            Attach the EA to your broker’s <strong>XAUUSD</strong> or <strong>XAUUSDm</strong> chart (any suffix that still contains
+            <code class="inline">XAU</code> and <code class="inline">USD</code> in the symbol name is recognised).
+          </p>
+          <ul class="checklist">
+            <li><strong>InpTradeGoldOnly</strong> — blocks attach on non-gold pairs (disable if you intentionally repurpose the code).</li>
+            <li><strong>InpApplyGoldPresets</strong> — raises minimum spread / slippage / liquidity tolerances suitable for volatile metals.</li>
+            <li>Defaults use wider spread and point tolerances; always tune <strong>InpMaxSpreadPoints</strong> to your broker’s typical XAU spread.</li>
+          </ul>
+        </div>
+        <aside class="aside-card">
+          <h3>Quick checklist</h3>
+          <ol>
+            <li>Use H1 or M15 preview, attach EA to <strong>XAUUSD</strong>.</li>
+            <li>Enable Algo Trading; allow WebRequest only if you add news APIs later.</li>
+            <li>Backtest with your broker’s gold contract specs and commissions.</li>
+            <li>VPS + low latency recommended for live execution.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="wrap">
+        <h2 class="section-title">System architecture</h2>
+        <pre class="diagram" role="img" aria-label="Architecture flow">PRICE DATA
+   → MARKET STRUCTURE → LIQUIDITY → BOS / CHOCH
+   → FVG → ORDER BLOCKS → SESSION FILTER
+   → RISK ENGINE → EXECUTION → MANAGEMENT → EXITS</pre>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Module</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>Core/MarketStructure.mqh</code></td><td>Swings, HTF bias, BOS / CHOCH proxy</td></tr>
+              <tr><td><code>Core/LiquidityEngine.mqh</code></td><td>Equal highs/lows, sweep + rejection</td></tr>
+              <tr><td><code>Core/FVGEngine.mqh</code></td><td>3-candle imbalance + ATR filter</td></tr>
+              <tr><td><code>Core/OrderBlockEngine.mqh</code></td><td>Opposing candle before displacement</td></tr>
+              <tr><td><code>Core/RiskEngine.mqh</code></td><td>DD, streaks, equity water-mark</td></tr>
+              <tr><td><code>Core/TradeExecution.mqh</code></td><td>Market / limit, sizing, retries</td></tr>
+              <tr><td><code>Core/TradeManagement.mqh</code></td><td>BE, partials, trail, opposite BOS exit</td></tr>
+              <tr><td><code>UI/Dashboard.mqh</code></td><td>On-chart status strip</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="install">
+      <div class="wrap">
+        <h2 class="section-title">Install (one folder)</h2>
+        <ol class="steps">
+          <li>Copy the entire <code class="inline">AFRICAD_QUANT_001</code> folder into <code class="inline">MQL5/Experts/</code> so the EA path is <code class="inline">MQL5/Experts/AFRICAD_QUANT_001/…</code> — not only the <code class="inline">.mq5</code> file in <code class="inline">Experts/</code> root (that breaks <code class="inline">#include</code>).</li>
+          <li>Open <code class="inline">main995Gold.mq5</code> or <code class="inline">MainEA.mq5</code> from inside that subfolder and compile (F7).</li>
+          <li>Drag the EA onto an <strong>XAUUSD</strong> chart; confirm inputs and session UTC alignment.</li>
+          <li>Forward-test / optimize on your broker’s gold symbol; adjust spread and ATR multipliers.</li>
+        </ol>
+        <p class="note">
+          This site is static HTML — open <code class="inline">website/index.html</code> in a browser, or host the
+          <code class="inline">website/</code> folder on any static host (GitHub Pages, Netlify, S3, etc.).
+        </p>
+      </div>
+    </section>
+
+    <section class="section risk" id="risk">
+      <div class="wrap">
+        <h2 class="section-title">Risk &amp; disclosure</h2>
+        <p>
+          Trading spot metals and CFDs involves substantial risk of loss. Past backtests do not guarantee future results.
+          The EA is a software framework; you are responsible for broker rules, leverage, swaps, contract size, and regulatory compliance.
+          No warranty is provided; use demo accounts first.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>AFRICAD QUANT 001</strong> · MQL5 modular SMC framework</p>
+      <p class="muted">© AFRICAD QUANT · Educational / research tooling</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
